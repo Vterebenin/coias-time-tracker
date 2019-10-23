@@ -1,8 +1,11 @@
 class TimeTrackersController < ApplicationController
   before_action :set_time_tracker, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /time_trackers
   def index
+    puts current_user
+    puts 'pzds'
     @time_trackers = TimeTracker.all
     render json: @time_trackers
   end
@@ -14,7 +17,7 @@ class TimeTrackersController < ApplicationController
 
   # POST /time_trackers
   def create
-    @time_tracker = TimeTracker.new(time_tracker_params)
+    @time_tracker = current_user.time_trackers.build(time_tracker_params)
 
     if @time_tracker.save
       render json: @time_tracker, status: :created, location: @time_tracker
