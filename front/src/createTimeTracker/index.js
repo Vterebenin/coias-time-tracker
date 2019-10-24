@@ -3,26 +3,46 @@ import axios from 'axios'
 
 function CreateTimeTracker(props) {
   const [timeTracker, setTimeTracker] = useState({})
+
+  const handleCreateClick = () => {
+    setTimeTracker({
+      time: 123.321,
+      desc: 'some desc'
+    })
+    // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    axios
+      .create({
+        baseURL: 'http://localhost:8000',
+      })
+      .get(
+        'get_uid',
+        // timeTracker,
+        // {withCredentials: true}
+      )
+      .then((response) => {
+        console.log('test')
+        console.log(response)
+        console.log(sessionStorage)
+      })
+
+  }
+
   useEffect(() => {
-    if (Object.keys(timeTracker).length !== 0) {
 
-      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-      axios
-        .create({
-          baseURL: 'http://localhost:8000',
-        })
-        .post('/time_trackers/', timeTracker)
-        .then(() => {
-          console.log('test')
-        })
-
-    }
-  }, [timeTracker]);
+  });
 
   return (
     <React.Fragment>
       <div className={'privet'}>
         privet mir
+        <a href="http://localhost:8000/users/auth/gitlab" >
+          войти через гитлаб
+        </a>
+      </div>
+      <div>
+        <button onClick={handleCreateClick}>
+          гет user
+        </button>
       </div>
     </React.Fragment>
   );

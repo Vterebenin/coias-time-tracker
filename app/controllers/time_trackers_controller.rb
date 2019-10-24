@@ -1,13 +1,15 @@
 class TimeTrackersController < ApplicationController
   before_action :set_time_tracker, only: [:show, :update, :destroy]
-  before_action :authenticate_user!
+ # before_action :authenticate_user!
 
   # GET /time_trackers
   def index
-    puts current_user
-    puts 'pzds'
-    @time_trackers = TimeTracker.all
+    @time_trackers = current_user.time_trackers.all
     render json: @time_trackers
+  end
+
+  def getUserUid
+    render json: current_user
   end
 
   # GET /time_trackers/1
