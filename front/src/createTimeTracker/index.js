@@ -11,18 +11,12 @@ function CreateTimeTracker(props) {
     })
     // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     axios
-      .create({
-        baseURL: 'http://localhost:8000',
-      })
       .get(
-        'get_uid',
-        // timeTracker,
-        // {withCredentials: true}
+        'http://localhost:8000/logged_in',
+        { withCredentials: true }
       )
       .then((response) => {
-        console.log('test')
         console.log(response)
-        console.log(sessionStorage)
       })
 
   }

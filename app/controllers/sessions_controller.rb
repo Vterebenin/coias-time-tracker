@@ -1,36 +1,37 @@
-class Api::SessionsController < Api::BaseController
-  prepend_before_filter :require_no_authentication, :only => [:create ]
-  include Devise::Controllers::InternalHelpers
-
-  before_filter :ensure_params_exist
-
-  respond_to :json
-
+class SessionsController < ApplicationController
+  include CurrentTimeTravelerConcern
   def create
-    build_resource
-    resource = User.find_for_database_authentication(:login=>params[:user_login][:login])
-    return invalid_login_attempt unless resource
+    time_traveler = TimeTraveler
+      .find_by(email: params["time_traveler"]["email"])
+      .try(:authenticate, params["time_traveler"]["password"])
 
-    if resource.valid_password?(params[:user_login][:password])
-      sign_in("user", resource)
-      render :json=> {:success=>true, :auth_token=>resource.authentication_token, :login=>resource.login, :email=>resource.email}
-      return
+    if time_traveler
+      session[:time_traveler_id] = time_traveler.id
+      render json: {
+        status: :created,
+        logged_in: true,
+        time_traveler: time_traveler
+      }
+    else
+      render json: { status: 401 }
     end
-    invalid_login_attempt
   end
 
-  def destroy
-    sign_out(resource_name)
+  def logged_in
+    if @current_time_traveler
+      render json: {
+        logged_in: true,
+        time_traveler: @current_time_traveler,
+      }
+    else
+      render json: {
+        logged_in: false
+      }
+    end
   end
 
-  protected
-  def ensure_params_exist
-    return unless params[:user_login].blank?
-    render :json=>{:success=>false, :message=>"missing user_login parameter"}, :status=>422
-  end
-
-  def invalid_login_attempt
-    warden.custom_failure!
-    render :json=> {:success=>false, :message=>"Error with your login or password"}, :status=>401
+  def logout
+    reset_session
+    render json: {status: 200, logged_in: false}
   end
 end
