@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {:omniauth_callbacks => 'callbacks'}
+  devise_for :users, :controllers => {:omniauth_callbacks => 'callbacks', sessions: 'users/sessions'}
   devise_scope :user do
+
+    get :logged_in, to: "user/sessions#logged_in"
+    delete :logout, to: "user/sessions#logout"
     get 'login', to: 'devise/sessions#new'
   end
   devise_scope :user do
@@ -15,8 +18,8 @@ Rails.application.routes.draw do
 
 
   resources :sessions, only: [:create]
-  delete :logout, to: "sessions#logout"
-  get :logged_in, to: "sessions#logged_in"
+  # delete :logout, to: "sessions#logout"
+  # get :logged_in, to: "sessions#logged_in"
   resources :registrations, only: [:create]
   # root 'home#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
