@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {:omniauth_callbacks => 'callbacks', sessions: 'users/sessions'}
   devise_scope :user do
-
     get :logged_in, to: "user/sessions#logged_in"
     delete :logout, to: "user/sessions#logout"
-    get 'login', to: 'devise/sessions#new'
-  end
-  devise_scope :user do
-    get 'signup', to: 'devise/registrations#new'
   end
 
   get 'get_uid', to: 'time_trackers#getUserUid'
