@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :games
   devise_for :users, :controllers => {:omniauth_callbacks => 'callbacks', sessions: 'users/sessions'}
   devise_scope :user do
     get :logged_in, to: "user/sessions#logged_in"

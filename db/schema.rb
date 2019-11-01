@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_25_170645) do
+ActiveRecord::Schema.define(version: 2019_11_01_202453) do
+
+# Could not dump table "games" because of following StandardError
+#   Unknown type 'reference' for column 'user_id'
 
   create_table "time_trackers", force: :cascade do |t|
     t.float "time"
