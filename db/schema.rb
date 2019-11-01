@@ -12,8 +12,8 @@
 
 ActiveRecord::Schema.define(version: 2019_11_01_202453) do
 
-# Could not dump table "games" because of following StandardError
-#   Unknown type 'reference' for column 'user_id'
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "time_trackers", force: :cascade do |t|
     t.float "time"
