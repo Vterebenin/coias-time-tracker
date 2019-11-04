@@ -60,16 +60,6 @@ function CreateTimeTracker(props) {
   }
 
   useEffect(() => {
-    axios
-      .get(
-        'http://localhost:8000/logged_in',
-        {withCredentials: true}
-      )
-      .then((response) => {
-        console.log(response)
-        const {id} = response.data.user
-        setUserId(id)
-      })
 
   });
 
