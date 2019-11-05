@@ -1,14 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Draggable, {DraggableCore} from 'react-draggable'; // Both at the same time
 
 const useStyles = makeStyles({
   card: {
     minWidth: 275,
+    background: '#222',
+    color: '#fff',
   },
   bullet: {
     display: 'inline-block',
@@ -28,30 +29,42 @@ export default function DraggableCard() {
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card dark assName={classes.card}>
-      <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="h2">
-          be
-          {bull}
-          nev
-          {bull}o{bull}
-          lent
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+    <Grid container spacing={3}>
+      <Grid item>
+        <Card className={classes.card} dark>
+          <CardContent>
+            Word of the Day
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card className={classes.card} dark>
+          <CardContent>
+            Word of the Day
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card className={classes.card} dark>
+          <CardContent>
+            Word of the Day
+          </CardContent>
+        </Card>
+      </Grid>
+
+      <Draggable
+        axis="x"
+        handle=".handle"
+        defaultPosition={{x: 0, y: 0}}
+        position={null}
+        grid={[25, 25]}
+        scale={1}
+       >
+        <div>
+          <div className="handle">Drag from here</div>
+          <div>This readme is really dragging on...</div>
+        </div>
+      </Draggable>
+    </Grid>
   );
 }

@@ -19,7 +19,8 @@ function App() {
         <Route exact path={'/drag'}>
           <Drag/>
         </Route>
-      </Switch> </Router>
+      </Switch>
+    </Router>
   );
 }
 
